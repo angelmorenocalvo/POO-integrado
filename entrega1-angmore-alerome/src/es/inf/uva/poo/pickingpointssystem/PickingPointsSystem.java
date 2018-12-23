@@ -1,12 +1,12 @@
 /**
+ /**
  * @author Alejandro Romero Pacho
  * @author Angel Moreno Calvo
  */
 package es.inf.uva.poo.pickingpointssystem;
 import java.util.ArrayList;
 
-import es.inf.uva.poo.grupablepoint.GrupablePoint;
-import es.inf.uva.poo.packagelocker.PackageLocker;
+import es.inf.uva.poo.pickingpoint.*;
 import es.uva.inf.poo.maps.GPSCoordinate;
 
 /** Herramienta que nos permite controlar el manejo de los package locker
@@ -17,39 +17,38 @@ import es.uva.inf.poo.maps.GPSCoordinate;
  */
 
 public class PickingPointsSystem {
-	ArrayList<PackageLocker> listaPackageLockers;
+	ArrayList<PickingPoint> listaPickingPoint;
 	
 	/**
 	 * Inicializa el arraylist de packagelockers
 	 */
 	
 	public PickingPointsSystem(){
-		listaPackageLockers = new ArrayList<PackageLocker>();
+		listaPickingPoint = new ArrayList<PickingPoint>();
 	}
 	
 	/**
 	 * Consulta el numero de packagelocker 
 	 * @param listaPackageLockers el array list
-	 * @return el tama�o del array list que representa un entero equivalente al numero de packagelockers
+	 * @return el tamano del array list que representa un entero equivalente al numero de packagelockers
 	 */
 
-	public int getNumeroPackageLocker(ArrayList<PackageLocker> listaPackageLockers) {
-		return listaPackageLockers.size();
+	public int getNumeroPackageLocker() {
+		return listaPickingPoint.size();
 	}
 	
 	/**
-	 * A�adir un nuevo packagelocker al arraylist
+	 * Anadir un nuevo packagelocker al arraylist
 	 * @param nuevo packagelocker a introducir
 	 * @param listaPackageLockers arraylist
-	 * @return el arraylist con el packagelocker a�adido
+	 * @return el arraylist con el packagelocker anadido
 	 * @throws IllegalArgumentException si {nuevo==null}
 	 */
 		
-	public ArrayList<PackageLocker> addPackageLocker(PackageLocker nuevo, ArrayList<PackageLocker> listaPackageLockers) {
+	public void addPackageLocker(PickingPoint nuevo) {
 		if(nuevo==null)
 			throw new IllegalArgumentException("llamada incorrecta al identificador del paquete, identificador == null");
-		listaPackageLockers.add(nuevo);
-		return listaPackageLockers;
+		listaPickingPoint.add(nuevo);
 	}
 	
 	/**
@@ -62,17 +61,17 @@ public class PickingPointsSystem {
 	 * @throws IllegalArgumentException si {bandera==false}
 	 */
 	
-	public void removePackageLocker(String codigoIdentificador, ArrayList<PackageLocker> listaPackageLockers) {
+	public void removePackageLocker(String codigoIdentificador) {
 		if(codigoIdentificador==null)
 			throw new IllegalArgumentException("llamada incorrecta al identificador del paquete, identificador == null");
 		boolean bandera = false;
-		for(int x=0; x < listaPackageLockers.size(); x++){
-			if((listaPackageLockers.get(x)).getIdentificador()==codigoIdentificador) {
-				listaPackageLockers.remove(x);	
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if((listaPickingPoint.get(x)).getIdentificador()==codigoIdentificador) {
+				listaPickingPoint.remove(x);	
 				bandera = true;
 			}
 		}
-		if(bandera==false)
+		if(!bandera)
 			throw new IllegalArgumentException("no existe ningun paquete con ningun ");
 	}
 	
@@ -86,11 +85,11 @@ public class PickingPointsSystem {
 	 * @throws IllegalArgumentException si {codigoIdentificador==null}
 	 */
 	
-	public boolean existePackageLocker(String codigoIdentificador, ArrayList<PackageLocker> listaPackageLockers) {
+	public boolean existepickingPoint(String codigoIdentificador) {
 		if(codigoIdentificador==null)
 			throw new IllegalArgumentException("llamada incorrecta al identificador del paquete, identificador == null");
-		for(int x=0; x < listaPackageLockers.size(); x++){
-			if((listaPackageLockers.get(x)).getIdentificador()==codigoIdentificador) {
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if((listaPickingPoint.get(x)).getIdentificador()==codigoIdentificador) {
 				return true;
 			}
 		}
@@ -105,14 +104,24 @@ public class PickingPointsSystem {
 	 * que seran los que tengan su estado = true
 	 */
 	
-	public GrupablePoint [] packageLockerOperativos(ArrayList<PackageLocker> listaPackageLockers){
-		ArrayList<PackageLocker> listaPackageLockersOperativos = new ArrayList<PackageLocker>();
-		for(int x=0; x < listaPackageLockers.size(); x++){
-			if((listaPackageLockers.get(x)).getEstado()==true) {
-				listaPackageLockersOperativos.add(listaPackageLockers.get(x));
+	public PickingPoint [] pickingPointsOperativos(){
+		ArrayList<PickingPoint> listaPackageLockersOperativos = new ArrayList<>();
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if((listaPickingPoint.get(x)).getEstado()) {
+				listaPackageLockersOperativos.add(listaPickingPoint.get(x));
 			}
 		}
-		return listaPackageLockersOperativos.toArray(new PackageLocker[listaPackageLockersOperativos.size()]);
+		return listaPackageLockersOperativos.toArray(new PickingPoint[listaPackageLockersOperativos.size()]);
+	}
+	
+	public PickingPoint [] pickingPointsConEspacio() {
+		ArrayList<PickingPoint> listaPickingPointsConEspacio = new ArrayList<>();
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if((listaPickingPoint.get(x)).getVacias()!=0) {
+				listaPickingPointsConEspacio.add(listaPickingPoint.get(x));
+			}
+		}
+		return listaPickingPointsConEspacio.toArray(new PickingPoint[listaPickingPointsConEspacio.size()]);
 	}
 	
 	/**
@@ -123,14 +132,14 @@ public class PickingPointsSystem {
 	 * que seran los que tengan su estado = false
 	 */
 	
-	public GrupablePoint [] packageLockerFueraDeServicio(ArrayList<PackageLocker> listaPackageLockers) {
-		ArrayList<PackageLocker> listaPackageLockersFueraDeServicio = new ArrayList<PackageLocker>();
-		for(int x=0; x < listaPackageLockers.size(); x++){
-			if((listaPackageLockers.get(x)).getEstado()==false) {
-				listaPackageLockersFueraDeServicio.add(listaPackageLockers.get(x));			
+	public PickingPoint [] pickingPointsFueraDeServicio() {
+		ArrayList<PickingPoint> listaPackageLockersFueraDeServicio = new ArrayList<>();
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if(!(listaPickingPoint.get(x)).getEstado()) {
+				listaPackageLockersFueraDeServicio.add(listaPickingPoint.get(x));			
 			}
 		}
-		return listaPackageLockersFueraDeServicio.toArray(new PackageLocker[listaPackageLockersFueraDeServicio.size()]);
+		return listaPackageLockersFueraDeServicio.toArray(new PickingPoint[listaPackageLockersFueraDeServicio.size()]);
 	}
 	
 	/**
@@ -145,18 +154,19 @@ public class PickingPointsSystem {
 	 * @throws IllegalArgumentException si {d<0}
 	 */
 	
-	public GrupablePoint [] packageLockerEnUnRadio(double d, ArrayList<PackageLocker> listaPackageLockers, GPSCoordinate coordenadas) {
+	public PickingPoint [] pickingPointOperativosEnUnRadio(double d,GPSCoordinate coordenadas) {
 		if(coordenadas==null)
 			throw new IllegalArgumentException("Las coordenadas no pueden ser nulas");
 		if(d<0)
 			throw new IllegalArgumentException("La distancia no puede ser negativa");
-		ArrayList<PackageLocker> listaPackageLockersEnUnRadio = new ArrayList<PackageLocker>();
-		for(int x=0; x < listaPackageLockers.size(); x++){			
-			if(((listaPackageLockers.get(x)).getCoordenadas().getDistanceTo(coordenadas))<=d){
-				listaPackageLockersEnUnRadio.add(listaPackageLockers.get(x));
+		ArrayList<PickingPoint> listaPackageLockersEnUnRadio = new ArrayList<>();
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if(listaPickingPoint.get(x).getEstado() && listaPickingPoint.get(x).getCoordenadas().getDistanceTo(coordenadas)<=d){
+				listaPackageLockersEnUnRadio.add(listaPickingPoint.get(x));
+			
 			}
 		}
-		return listaPackageLockersEnUnRadio.toArray(new PackageLocker[listaPackageLockersEnUnRadio.size()]);
+		return listaPackageLockersEnUnRadio.toArray(new PickingPoint[listaPackageLockersEnUnRadio.size()]);
 	}
 	
 	/**
@@ -167,13 +177,13 @@ public class PickingPointsSystem {
 	 * de que lo fuera guardariamos ese packagelocker en el array
 	 */
 	
-	public GrupablePoint [] packageLockerConTaquillasVacias(ArrayList<PackageLocker> listaPackageLockers) {
-		ArrayList<PackageLocker> listaPackageLockersConTaquillasVacias = new ArrayList<PackageLocker>();
-		for(int x=0; x < listaPackageLockers.size(); x++){
-			if((listaPackageLockers.get(x)).getVacias()>0){
-				listaPackageLockersConTaquillasVacias.add(listaPackageLockers.get(x));
+	public PickingPoint [] pickingPointsConTaquillasVacias() {
+		ArrayList<PickingPoint> listaPackageLockersConTaquillasVacias = new ArrayList<>();
+		for(int x=0; x < listaPickingPoint.size(); x++){
+			if((listaPickingPoint.get(x)).getVacias()>0){
+				listaPackageLockersConTaquillasVacias.add(listaPickingPoint.get(x));
 			}
 		}
-		return listaPackageLockersConTaquillasVacias.toArray(new PackageLocker[listaPackageLockersConTaquillasVacias.size()]);
+		return listaPackageLockersConTaquillasVacias.toArray(new PickingPoint[listaPackageLockersConTaquillasVacias.size()]);
 	}
 }

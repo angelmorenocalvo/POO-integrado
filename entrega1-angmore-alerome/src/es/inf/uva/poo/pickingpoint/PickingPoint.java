@@ -37,8 +37,6 @@ public abstract class PickingPoint {
 	
 
 
-	
-	
 	/**
 	 * modificar el valor de la variable estado
 	 * @param estado para saber si esta abierto o cerrado, es decir entre horario apertura y de cierre

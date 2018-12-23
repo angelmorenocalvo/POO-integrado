@@ -1,5 +1,5 @@
 package es.inf.uva.poo.identificationregistry;
-
+import es.inf.uva.poo.paquete.Package;
 import java.time.LocalDate;
 
 public interface IdentificationRegistry {
