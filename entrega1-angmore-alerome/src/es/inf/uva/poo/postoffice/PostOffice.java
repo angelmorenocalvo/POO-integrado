@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import es.inf.uva.poo.paquete.Package;
 
-public class PostOffice {
+public class PostOffice implements es.inf.uva.poo.identificationregistry.IdentificationRegistry {
 	
 				//	VARIABLES GLOBALES
 

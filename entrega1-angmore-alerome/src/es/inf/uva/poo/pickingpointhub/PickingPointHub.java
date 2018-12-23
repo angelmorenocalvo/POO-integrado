@@ -7,8 +7,8 @@ import es.inf.uva.poo.kiosk.Kiosk;
 
 import java.util.Arrays;
 import java.util.ArrayList;
-
-public class PickingPointHub {
+import es.inf.uva.poo.pickingpoint.*;
+public class PickingPointHub extends PickingPoint{
 	
 				//	VARIABLES GLOBALES
 	
