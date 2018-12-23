@@ -24,7 +24,7 @@ public class PickingPointsSystem {
 	 */
 	
 	public PickingPointsSystem(){
-		listaPickingPoint = new ArrayList<PickingPoint>();
+		listaPickingPoint = new ArrayList<>();
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class PickingPointsSystem {
 		
 	public void addPackageLocker(PickingPoint nuevo) {
 		if(nuevo==null)
-			throw new IllegalArgumentException("llamada incorrecta al identificador del paquete, identificador == null");
+			throw new IllegalArgumentException("llamada incorecta al identificador del paquete, identificador == null");
 		listaPickingPoint.add(nuevo);
 	}
 	

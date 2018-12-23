@@ -7,7 +7,7 @@ package es.inf.uva.poo.kiosk;
 
 import es.inf.uva.poo.grupablepoint.GrupablePoint;
 import es.uva.inf.poo.maps.GPSCoordinate;
-
+import es.inf.uva.poo.paquete.Package;
 
 
 public class Kiosk extends GrupablePoint{
@@ -43,6 +43,16 @@ public class Kiosk extends GrupablePoint{
 				}
 		}
  }
+ 
+ @Override
+ public void addPackage(Package p) {
+	 if(p == null)
+	 throw new IllegalArgumentException("El paquete no puede ser null");
+ 	 	if(p.getCertificado()) {
+ 	 		throw new IllegalArgumentException("un kiosk no puede contener un paquete certificado");
+ 	 	}
+ 	super.addPackage(p);
+}
  
  public int getCobrado() {
 	 return cobrado;
