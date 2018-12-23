@@ -135,12 +135,12 @@ public class PackageLocker extends GrupablePoint {
 	public Package getPackage(int numeroCelda) { // MIRAR SI FALLA COMO A PABLO
 		if (numeroCelda<0)
 			throw new IllegalArgumentException(CADENAERROR);
-		if (numeroCelda> taquillas.size())
+		if (numeroCelda> size())
 			throw new IllegalArgumentException(CADENAERROR);
-		if(taquillas.get(numeroCelda-1) == null)
+		if(getPackage(numeroCelda-1) == null)
 			throw new AssertionError("La celda no contiene paquete.");
 		
-		return taquillas.get(numeroCelda-1) ;
+		return getPackage(numeroCelda-1) ;
 	}
 	/**
 	 * Da la posibilidad de introducir un paquete en una taquilla del packagelocker
@@ -177,8 +177,8 @@ public class PackageLocker extends GrupablePoint {
 	public Package mirarEnTaquilla(int numeroCelda) {
 		if (numeroCelda<0)
 			throw new IllegalArgumentException(CADENAERROR);
-		if (numeroCelda> taquillas.size())
+		if (numeroCelda> size())
 			throw new IllegalArgumentException(FUERARANGO);
-		return taquillas.get(numeroCelda-1);
+		return getPackage(numeroCelda-1);
 	}	
 }
