@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import es.inf.uva.poo.pickingpoint.PickingPoint;
 public class GrupablePoint extends PickingPoint {
 
-	protected String identificador;
-	protected boolean operativo;
-	protected GPSCoordinate localizacionPackageLocker;
-	protected  ArrayList<Package> taquillas;
-	protected int tamanoMaximo;
+	private String identificador;
+	private boolean operativo;
+	private GPSCoordinate localizacionPackageLocker;
+	private  ArrayList<Package> taquillas;
+	private int tamanoMaximo;
 	
 	public GrupablePoint(boolean estado,int tamano, String codigo, GPSCoordinate localizacion) {
 		if(tamano<0)
@@ -26,6 +26,18 @@ public class GrupablePoint extends PickingPoint {
 		taquillas = new ArrayList<>();
 		tamanoMaximo = tamano;
 		localizacionPackageLocker = localizacion;
+	}
+	
+	protected int size() {
+		return taquillas.size();
+	}
+	
+	protected Package getPackage(int i) {
+		if(i<0)
+			throw new IllegalArgumentException("El tamano tiene que ser mayor de 0");
+		if(i>=getTamano())
+			throw new IllegalArgumentException("El tamano tiene que ser mayor de 0");
+		return taquillas.get(i);
 	}
 	/**
 	 * modificar el valor de la variable estado
@@ -214,7 +226,7 @@ public class GrupablePoint extends PickingPoint {
 	 * @param p un paquete que debe ser distinto de null
 	 * @throws IllegalArgumentException si el paquete es nulo
 	 */
-	public void meterPaquete(Package p) {
+	public void addPackage(Package p) {
 
 		if(p == null)
 			throw new IllegalArgumentException("El paquete no puede ser null");
@@ -222,6 +234,17 @@ public class GrupablePoint extends PickingPoint {
 			throw new IllegalArgumentException("el contenedor esta lleno, no se pueden introducir mas paquetes");
 		taquillas.add(p);
 	}
+	
+	public void addPackage(int i,Package p) {
+		if(i<0)
+			throw new IllegalArgumentException("El tamano tiene que ser mayor de 0");
+		if(i>=getTamano())
+			throw new IllegalArgumentException("El tamano tiene que ser mayor de 0");
+		if(taquillas.size() == tamanoMaximo)
+			throw new IllegalArgumentException("el contenedor esta lleno, no se pueden introducir mas paquetes");
+		taquillas.add(i,p);
+	}
+	
 //mira si esto tiene que ir en el paquete
 	/**
 	 * Comprueba si el paquete ha pasado de fecha
